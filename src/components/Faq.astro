@@ -1,0 +1,43 @@
+---
+import { faqs } from '../data/site';
+---
+
+<section id="faq" class="faq bg-white py-16 sm:py-24" aria-labelledby="faq-title">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <p class="font-bold tracking-wide text-brand-700 uppercase">Preguntas frecuentes</p>
+    <h2 id="faq-title" class="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+      Lo que nos preguntan los hosteleros
+    </h2>
+
+    <div class="mt-10 divide-y divide-slate-200 border-y border-slate-200">
+      {
+        faqs.map((faq) => (
+          <details name="faq">
+            <summary class="flex min-h-14 cursor-pointer items-center gap-3 py-4 text-lg font-bold text-ink hover:text-brand-700">
+              {faq.question}
+            </summary>
+            <p class="pb-5 pl-8 text-lg leading-relaxed text-slate-700">{faq.answer}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Navegadores sin soporte del atributo name en <details>: mantener una sola respuesta abierta.
+  if (!Object.hasOwn(HTMLDetailsElement.prototype, 'name')) {
+    document.addEventListener(
+      'toggle',
+      (event) => {
+        const details = event.target;
+        if (!(details instanceof HTMLDetailsElement) || !details.open || !details.hasAttribute('name')) return;
+        const name = CSS.escape(details.getAttribute('name') ?? '');
+        for (const other of document.querySelectorAll<HTMLDetailsElement>(`details[name="${name}"]`)) {
+          if (other !== details) other.open = false;
+        }
+      },
+      { capture: true },
+    );
+  }
+</script>

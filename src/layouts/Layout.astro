@@ -1,0 +1,129 @@
+---
+import '../styles/global.css';
+import { site, pricing, faqs } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  /** Añade el bloque FAQPage al JSON-LD (solo en páginas que muestran esas preguntas). */
+  includeFaqSchema?: boolean;
+}
+
+const {
+  title = `${site.name} | TPV para hostelería sin cuotas mensuales`,
+  description = site.description,
+  ogImage = '/og-image.png',
+  includeFaqSchema = false,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = new URL(ogImage, siteUrl).href;
+
+const prices = Object.values(pricing.base);
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  description,
+  url: canonicalUrl,
+  image: ogImageUrl,
+  applicationCategory: 'BusinessApplication',
+  applicationSubCategory: 'TPV / Punto de venta para hostelería',
+  operatingSystem: 'Android',
+  inLanguage: 'es-ES',
+  featureList: [
+    'Funcionamiento sin internet (offline-first)',
+    'Cobro en barra en 2 toques',
+    'Plano visual de mesas y terraza',
+    'Comandas a cocina y barra',
+    'División de cuentas',
+    'Cierre de caja ciega',
+    'Cumplimiento Veri*factu y TicketBai',
+  ],
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: pricing.currency,
+    lowPrice: Math.min(...prices),
+    highPrice: Math.max(...prices),
+    offerCount: prices.length,
+    availability: 'https://schema.org/InStock',
+    areaServed: { '@type': 'Country', name: 'España' },
+  },
+  provider: {
+    '@type': 'Organization',
+    name: site.name,
+    url: siteUrl.href,
+    telephone: site.phoneE164,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: site.phoneE164,
+      contactType: 'sales',
+      areaServed: 'ES',
+      availableLanguage: ['es'],
+    },
+  },
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+};
+
+const schemas = includeFaqSchema ? [softwareSchema, faqSchema] : [softwareSchema];
+// Escapa "<" para que ningún texto pueda cerrar la etiqueta <script> del JSON-LD.
+const toJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name}: ${site.tagline}`} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    {schemas.map((schema) => <script type="application/ld+json" set:html={toJsonLd(schema)} />)}
+  </head>
+  <body class="min-h-dvh font-sans">
+    <a
+      href="#contenido"
+      class="sr-only z-[60] rounded-lg bg-ink px-4 py-3 font-semibold text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      Saltar al contenido
+    </a>
+    <slot />
+  </body>
+</html>

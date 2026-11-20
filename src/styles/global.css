@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Naranja de marca: el 700 sobre blanco supera 4.5:1 de contraste con texto blanco. */
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-ink: #0f172a;
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #075e54;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    /* Compensa la cabecera fija al saltar a un ancla */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-white text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-brand-700);
+    outline-offset: 3px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------- Navegación: popover en móvil, en línea en escritorio ---------- */
+.site-menu {
+  /* Posición de respaldo para navegadores sin anchor positioning; el anchor() de abajo la sustituye */
+  position: fixed;
+  inset: auto;
+  inset-block-start: 4.5rem;
+  inset-block-start: anchor(--menu-button bottom);
+  inset-inline-end: 1rem;
+  inline-size: min(85dvw, 22rem);
+  max-block-size: calc(100dvh - 6rem);
+  margin: 0.5rem 0 0;
+  overflow: auto;
+}
+
+.menu-button {
+  anchor-name: --menu-button;
+}
+
+@media (width >= 64rem) {
+  .site-menu {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    inline-size: auto;
+    max-block-size: none;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .site-menu::backdrop {
+    display: none;
+  }
+}
+
+/* ---------- FAQ: acordeón con <details> ---------- */
+.faq summary {
+  list-style: none;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary::before {
+  content: "";
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  flex-shrink: 0;
+  background-color: currentColor;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center / contain;
+  rotate: -90deg;
+}
+
+.faq details[open] > summary::before {
+  rotate: 0deg;
+}
+
+.faq details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+.faq details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .faq summary::before {
+    transition: rotate 0.2s;
+  }
+
+  .faq details::details-content {
+    transition: block-size, content-visibility, display;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+}
+
+/* ---------- Formulario: errores solo tras interactuar o intentar enviar ---------- */
+.field-error {
+  display: none;
+}
+
+.lead-form :is(input, select, textarea):is(:user-invalid, .was-submitted :invalid) {
+  border-color: #b91c1c;
+  background-color: #fef2f2;
+}
+
+.lead-form :is(input, select, textarea):is(:user-invalid, .was-submitted :invalid) + .field-error {
+  display: flex;
+}
+
+/* Espacio para que el botón flotante de WhatsApp no tape el final de la página */
+.pb-float {
+  padding-block-end: calc(6rem + env(safe-area-inset-bottom, 0px));
+}

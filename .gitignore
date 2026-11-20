@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+
+# Configuración local de Claude Code (la skill real está en .agents/skills; .claude/skills es solo un enlace)
+.claude/skills/
+.claude/settings.local.json

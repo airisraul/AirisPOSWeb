@@ -1,0 +1,227 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { businessTypes, site, whatsappUrl } from '../data/site';
+
+const errorIcon =
+  '<svg class="mt-0.5 size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>';
+const inputClass =
+  'block min-h-13 w-full rounded-xl border-2 border-slate-400 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500 focus:border-brand-700 focus:outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-700';
+---
+
+<section id="contacto" class="bg-ink py-16 text-white sm:py-24" aria-labelledby="contacto-title">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
+    <div>
+      <p class="font-bold tracking-wide text-brand-500 uppercase">Demo gratuita</p>
+      <h2 id="contacto-title" class="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Pruébalo en tu local, sin compromiso
+      </h2>
+      <p class="mt-4 text-lg text-slate-300">
+        Déjanos tu teléfono y te llamamos para enseñarte AirisPOS con tu propia carta. Tardas menos de un minuto en rellenarlo.
+      </p>
+
+      <ul class="mt-8 space-y-4 text-slate-200">
+        <li>Dinos en el comentario cuándo te viene mejor que te llamemos: sabemos que en pleno servicio no puedes atender el teléfono.</li>
+        <li>
+          ¿Prefieres hablar ya? Llámanos al
+          <a href={`tel:${site.phoneE164}`} class="font-bold whitespace-nowrap text-white underline underline-offset-4">{site.phoneDisplay}</a>
+          o
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="inline-flex items-center gap-1 font-bold text-white underline underline-offset-4">
+            <WhatsAppIcon class="size-4" />escríbenos por WhatsApp</a
+          >.
+        </li>
+      </ul>
+    </div>
+
+    <div class="rounded-2xl bg-white p-6 text-ink shadow-xl sm:p-8">
+      <form
+        id="lead-form"
+        class="lead-form space-y-6"
+        method="post"
+        action={site.formEndpoint || undefined}
+        novalidate
+        aria-labelledby="contacto-title"
+      >
+        <div>
+          <label for="lead-name" class="mb-1.5 block font-bold">Nombre <span aria-hidden="true" class="text-red-700">*</span></label>
+          <input
+            id="lead-name"
+            name="name"
+            type="text"
+            required
+            minlength="2"
+            maxlength="80"
+            autocomplete="name"
+            enterkeyhint="next"
+            data-error="lead-name-error"
+            class={inputClass}
+          />
+          <p id="lead-name-error" class="field-error mt-1.5 items-start gap-1.5 text-sm font-semibold text-red-700">
+            <Fragment set:html={errorIcon} />Error: escribe tu nombre para saber por quién preguntar.
+          </p>
+        </div>
+
+        <div>
+          <label for="lead-phone" class="mb-1.5 block font-bold">Teléfono o WhatsApp <span aria-hidden="true" class="text-red-700">*</span></label>
+          <span id="lead-phone-hint" class="mb-1.5 block text-sm text-slate-600">Por ejemplo: 612 345 678</span>
+          <input
+            id="lead-phone"
+            name="phone"
+            type="tel"
+            required
+            inputmode="tel"
+            autocomplete="tel"
+            pattern="\+?[0-9 ]{9,16}"
+            maxlength="16"
+            enterkeyhint="next"
+            aria-describedby="lead-phone-hint"
+            data-error="lead-phone-error"
+            class={inputClass}
+          />
+          <p id="lead-phone-error" class="field-error mt-1.5 items-start gap-1.5 text-sm font-semibold text-red-700">
+            <Fragment set:html={errorIcon} />Error: escribe un teléfono de al menos 9 cifras, por ejemplo 612 345 678.
+          </p>
+        </div>
+
+        <div>
+          <label for="lead-type" class="mb-1.5 block font-bold">Tipo de local <span aria-hidden="true" class="text-red-700">*</span></label>
+          <select id="lead-type" name="type" required data-error="lead-type-error" class={`${inputClass} cursor-pointer`}>
+            <option value="" selected disabled>Elige una opción</option>
+            {businessTypes.map((type) => <option value={type.id}>{type.label}</option>)}
+            <option value="otro">Otro tipo de local</option>
+          </select>
+          <p id="lead-type-error" class="field-error mt-1.5 items-start gap-1.5 text-sm font-semibold text-red-700">
+            <Fragment set:html={errorIcon} />Error: elige el tipo de local que más se parezca al tuyo.
+          </p>
+        </div>
+
+        <div>
+          <label for="lead-comment" class="mb-1.5 block font-bold">Comentario <span class="font-normal text-slate-600">(opcional)</span></label>
+          <textarea
+            id="lead-comment"
+            name="comment"
+            rows="3"
+            maxlength="1000"
+            placeholder="Cuántas mesas tienes, qué equipos usas ahora, cuándo te viene bien que te llamemos…"
+            class={`${inputClass} resize-y`}></textarea>
+        </div>
+
+        <!-- Campo trampa contra bots: invisible para personas -->
+        <div class="hidden" aria-hidden="true">
+          <label for="lead-website">No rellenes este campo</label>
+          <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            class="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-brand-700 px-6 text-lg font-bold text-white shadow-lg hover:bg-brand-800 disabled:cursor-wait disabled:opacity-70"
+          >
+            Quiero mi demo gratis
+          </button>
+          <p class="mt-3 text-sm text-slate-600">
+            Solo usaremos tus datos para contactarte sobre AirisPOS. Sin spam y sin compromiso.
+          </p>
+          <p id="lead-status" role="status" class="mt-4 empty:hidden rounded-xl bg-emerald-50 p-4 font-semibold text-emerald-900"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { businessTypes, site, whatsappUrl } from '../data/site';
+
+  const form = document.getElementById('lead-form') as HTMLFormElement | null;
+  const status = document.getElementById('lead-status');
+
+  if (form && status) {
+    const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-error]')];
+    const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const comment = form.elements.namedItem('comment') as HTMLTextAreaElement;
+    const typeSelect = form.elements.namedItem('type') as HTMLSelectElement;
+
+    // Mantener aria-invalid y el mensaje de error enlazado igual que lo que se ve.
+    const syncAria = (field: HTMLInputElement | HTMLSelectElement) => {
+      const shown = field.matches(':user-invalid') || (form.classList.contains('was-submitted') && !field.validity.valid);
+      field.setAttribute('aria-invalid', String(shown));
+      const errorId = field.dataset.error!;
+      const ids = (field.getAttribute('aria-describedby') ?? '').split(/\s+/).filter((id) => id && id !== errorId);
+      if (shown) ids.push(errorId);
+      if (ids.length) field.setAttribute('aria-describedby', ids.join(' '));
+      else field.removeAttribute('aria-describedby');
+    };
+
+    // Validar al salir del campo y limpiar el error en cuanto se corrige (nunca mientras se escribe).
+    form.addEventListener('focusout', (event) => {
+      if (fields.includes(event.target as HTMLInputElement)) syncAria(event.target as HTMLInputElement);
+    });
+    form.addEventListener('input', (event) => {
+      const field = event.target as HTMLInputElement;
+      if (fields.includes(field) && field.getAttribute('aria-invalid') === 'true' && field.validity.valid) syncAria(field);
+    });
+    form.addEventListener('change', (event) => {
+      if (event.target === typeSelect) syncAria(typeSelect);
+    });
+
+    // Autorrelleno desde la calculadora de licencias.
+    window.addEventListener('airis:prefill-contact', (event) => {
+      const { type, comment: text } = (event as CustomEvent<{ type: string; comment: string }>).detail;
+      typeSelect.value = type;
+      syncAria(typeSelect);
+      comment.value = text;
+      document.getElementById('contacto')?.scrollIntoView({ block: 'start' });
+      (form.elements.namedItem('name') as HTMLInputElement).focus({ preventScroll: true });
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      form.classList.add('was-submitted');
+      fields.forEach(syncAria);
+
+      const firstInvalid = fields.find((field) => !field.validity.valid);
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      const data = new FormData(form);
+      if (data.get('website')) return; // bot
+
+      submitButton.disabled = true;
+      status.textContent = '';
+
+      try {
+        if (site.formEndpoint) {
+          const response = await fetch(site.formEndpoint, {
+            method: 'POST',
+            body: data,
+            headers: { Accept: 'application/json' },
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          status.textContent = '¡Gracias! Hemos recibido tus datos. Te llamamos muy pronto.';
+        } else {
+          // Sin servidor de formularios: abrir WhatsApp con el mensaje ya escrito.
+          const typeLabel =
+            businessTypes.find((t) => t.id === data.get('type'))?.label ?? 'Otro tipo de local';
+          const lines = [
+            'Hola, quiero una demo gratis de AirisPOS.',
+            `Nombre: ${data.get('name')}`,
+            `Teléfono: ${data.get('phone')}`,
+            `Tipo de local: ${typeLabel}`,
+          ];
+          const extra = String(data.get('comment') ?? '').trim();
+          if (extra) lines.push(`Comentario: ${extra}`);
+          window.open(whatsappUrl(lines.join('\n')), '_blank', 'noopener');
+          status.textContent = 'Te hemos abierto WhatsApp con tus datos. Solo tienes que pulsar enviar.';
+        }
+        form.reset();
+        form.classList.remove('was-submitted');
+        fields.forEach(syncAria);
+      } catch {
+        status.textContent = `No hemos podido enviar el formulario. Llámanos al ${site.phoneDisplay} o escríbenos por WhatsApp.`;
+      } finally {
+        submitButton.disabled = false;
+      }
+    });
+  }
+</script>

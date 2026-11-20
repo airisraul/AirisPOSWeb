@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PENDIENTE: actualizar si cambia el dominio
+Sitemap: https://www.airispos.es/sitemap-index.xml

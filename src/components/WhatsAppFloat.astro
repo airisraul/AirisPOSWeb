@@ -1,0 +1,14 @@
+---
+import WhatsAppIcon from './WhatsAppIcon.astro';
+import { whatsappUrl } from '../data/site';
+---
+
+<a
+  href={whatsappUrl()}
+  target="_blank"
+  rel="noopener"
+  class="fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 inline-flex size-16 items-center justify-center rounded-full bg-whatsapp text-white shadow-xl shadow-black/20 ring-4 ring-white transition-transform hover:scale-105 motion-reduce:transition-none sm:size-[4.25rem]"
+  aria-label="Escríbenos por WhatsApp (se abre en una pestaña nueva)"
+>
+  <WhatsAppIcon class="size-9" />
+</a>

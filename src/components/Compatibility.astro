@@ -1,0 +1,79 @@
+---
+const hardware = [
+  {
+    title: 'Terminales y pantallas táctiles',
+    text: 'Funciona en los terminales TPV y tablets Android habituales del mercado. Si ya tienes uno, probablemente te sirva.',
+  },
+  {
+    title: 'Impresoras de tickets y de cocina',
+    text: 'Compatible con las impresoras térmicas más comunes, por cable, red o wifi. Una para tickets y las que necesites para cocina y barra.',
+  },
+  {
+    title: 'Cajón portamonedas',
+    text: 'Se abre solo al cobrar en efectivo, conectado a tu impresora de tickets como hasta ahora.',
+  },
+  {
+    title: 'Comanderos móviles',
+    text: 'Tus camareros toman nota desde un móvil o tablet Android y la comanda llega al instante a cocina.',
+  },
+];
+---
+
+<section id="compatibilidad" class="bg-slate-50 py-16 sm:py-24" aria-labelledby="compatibilidad-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="max-w-2xl">
+      <p class="font-bold tracking-wide text-brand-700 uppercase">Compatibilidad y normativa</p>
+      <h2 id="compatibilidad-title" class="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+        Aprovecha lo que ya tienes y olvídate de Hacienda
+      </h2>
+      <p class="mt-4 text-lg text-slate-700">
+        No hace falta cambiar todo el equipo. Cuéntanos qué tienes y te decimos qué puedes reutilizar antes de comprar nada.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-8 lg:grid-cols-2">
+      <div>
+        <h3 class="text-xl font-bold text-ink">Hardware compatible</h3>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {
+            hardware.map((item) => (
+              <li class="rounded-2xl border border-slate-200 bg-white p-5">
+                <p class="font-bold text-ink">{item.title}</p>
+                <p class="mt-1 text-slate-700">{item.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="rounded-2xl bg-emerald-900 p-6 text-white sm:p-8">
+        <h3 class="flex items-center gap-3 text-xl font-bold">
+          <svg class="size-7 shrink-0 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4" />
+          </svg>
+          Tranquilidad legal y fiscal
+        </h3>
+        <dl class="mt-6 space-y-5">
+          <div>
+            <dt class="font-bold">Veri*factu (Ley Antifraude)</dt>
+            <dd class="mt-1 text-emerald-50">
+              Cada ticket y factura genera su registro con la huella y el código QR que exige Hacienda. No tienes que hacer nada distinto.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">TicketBai (País Vasco)</dt>
+            <dd class="mt-1 text-emerald-50">
+              Si tu local está en Álava, Bizkaia o Gipuzkoa, los tickets se emiten y envían a tu Hacienda foral automáticamente.
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold">Actualizaciones incluidas</dt>
+            <dd class="mt-1 text-emerald-50">
+              Cuando cambia la normativa, actualizamos AirisPOS. Durante el primer año, sin coste adicional.
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
