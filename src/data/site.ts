@@ -6,8 +6,7 @@ export const site = {
   tagline: 'TPV para hostelería que sigue cobrando aunque se caiga internet',
   description:
     'AirisPOS es el TPV para bares, cafeterías y restaurantes que funciona sin internet, cobra en 2 toques y cumple Veri*factu y TicketBai. Pago único, sin cuotas mensuales. Pide tu demo gratis.',
-  phoneDisplay: '+34 619 73 82 98',
-  phoneE164: '+34619738298',
+  // Solo se usa dentro de los enlaces de WhatsApp; no se muestra escrito en la web.
   whatsappNumber: '34619738298',
   whatsappDefaultMessage: 'Hola, me interesa AirisPOS para mi local. ¿Me podéis dar más información?',
   // PENDIENTE: horario real del soporte técnico.

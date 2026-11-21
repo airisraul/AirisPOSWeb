@@ -22,11 +22,9 @@ const inputClass =
       <ul class="mt-8 space-y-4 text-slate-200">
         <li>Dinos en el comentario cuándo te viene mejor que te llamemos: sabemos que en pleno servicio no puedes atender el teléfono.</li>
         <li>
-          ¿Prefieres hablar ya? Llámanos al
-          <a href={`tel:${site.phoneE164}`} class="font-bold whitespace-nowrap text-white underline underline-offset-4">{site.phoneDisplay}</a>
-          o
+          ¿Prefieres hablar ya?
           <a href={whatsappUrl()} target="_blank" rel="noopener" class="inline-flex items-center gap-1 font-bold text-white underline underline-offset-4">
-            <WhatsAppIcon class="size-4" />escríbenos por WhatsApp</a
+            <WhatsAppIcon class="size-4" />Escríbenos por WhatsApp</a
           >.
         </li>
       </ul>
@@ -218,7 +216,7 @@ const inputClass =
         form.classList.remove('was-submitted');
         fields.forEach(syncAria);
       } catch {
-        status.textContent = `No hemos podido enviar el formulario. Llámanos al ${site.phoneDisplay} o escríbenos por WhatsApp.`;
+        status.textContent = 'No hemos podido enviar el formulario. Inténtalo de nuevo o escríbenos por WhatsApp.';
       } finally {
         submitButton.disabled = false;
       }
