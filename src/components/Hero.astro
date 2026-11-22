@@ -1,6 +1,7 @@
 ---
 import Screenshot from './Screenshot.astro';
 import planoMesas from '../assets/capturas/plano-mesas.png';
+import { formatPrice, lowestMonthlyPrice, pricing } from '../data/site';
 ---
 
 <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white" aria-labelledby="hero-title">
@@ -18,7 +19,7 @@ import planoMesas from '../assets/capturas/plano-mesas.png';
       <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-700 sm:text-xl">
         Para bares, cafeterías, restaurantes y locales de delivery que no pueden permitirse parar. Cobra en
         barra en 2 toques, manda las comandas a cocina al momento y cierra caja en un minuto.
-        <strong class="text-ink">Pago único, sin cuotas mensuales.</strong>
+        <strong class="text-ink">Desde {formatPrice(lowestMonthlyPrice)}/mes, sin permanencia ni comisiones sobre tus ventas.</strong>
       </p>
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -26,19 +27,19 @@ import planoMesas from '../assets/capturas/plano-mesas.png';
           href="#contacto"
           class="inline-flex min-h-14 items-center justify-center rounded-xl bg-brand-700 px-6 text-lg font-bold text-white shadow-lg shadow-brand-700/25 hover:bg-brand-800"
         >
-          Solicitar Demo Gratuita
+          Probar {pricing.trialDays} días gratis
         </a>
         <a
-          href="#licencias"
+          href="#precios"
           class="inline-flex min-h-14 items-center justify-center rounded-xl border-2 border-ink px-6 text-lg font-bold text-ink hover:bg-ink hover:text-white"
         >
-          Calcular mi Licencia
+          Ver planes y precios
         </a>
       </div>
 
       <ul class="mt-8 grid gap-2 text-sm font-medium text-slate-700 sm:grid-cols-2">
         {
-          ['Instalación y carga de carta incluidas', 'Usa tus impresoras y cajón actuales', 'Soporte también en fin de semana', 'Demo sin compromiso en tu local'].map(
+          [`${pricing.trialDays} días de prueba gratis`, 'Sin permanencia: te das de baja cuando quieras', 'Usa tus impresoras y cajón actuales', 'Puesta en marcha gratis con el plan anual'].map(
             (item) => (
               <li class="flex items-center gap-2">
                 <svg class="size-5 shrink-0 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

@@ -1,0 +1,173 @@
+---
+import { formatPrice, pricing } from '../data/site';
+
+const check =
+  '<svg class="mt-0.5 size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>';
+---
+
+<section id="precios" class="pricing bg-white py-16 sm:py-24" aria-labelledby="precios-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="font-bold tracking-wide text-brand-700 uppercase">Precios</p>
+      <h2 id="precios-title" class="mt-2 text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+        Control total de tu sala, cocina y hotel, sin comisiones sobre tus ventas
+      </h2>
+      <p class="mt-4 text-lg text-slate-700">
+        {pricing.trialDays} días de prueba gratuita, sin permanencia y con soporte en español. Todos los precios son sin IVA.
+      </p>
+    </div>
+
+    <!-- Selector mensual / anual: dos radios, el cambio de precio lo hace CSS con :has() -->
+    <fieldset class="mx-auto mt-10 w-fit">
+      <legend class="sr-only">Forma de pago</legend>
+      <div class="flex rounded-2xl bg-slate-100 p-1.5">
+        <label class="flex min-h-12 cursor-pointer items-center rounded-xl px-5 font-bold text-slate-700 has-checked:bg-white has-checked:text-ink has-checked:shadow has-focus-visible:outline-3 has-focus-visible:outline-brand-700">
+          <input type="radio" name="billing" value="monthly" id="billing-monthly" class="sr-only" />
+          Mensual
+        </label>
+        <label class="flex min-h-12 cursor-pointer items-center gap-2 rounded-xl px-5 font-bold text-slate-700 has-checked:bg-white has-checked:text-ink has-checked:shadow has-focus-visible:outline-3 has-focus-visible:outline-brand-700">
+          <input type="radio" name="billing" value="annual" id="billing-annual" class="sr-only" checked />
+          Anual
+          <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-sm text-emerald-800">-{pricing.annualDiscount} %</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <ul class="mt-10 grid items-start gap-6 lg:grid-cols-3">
+      {
+        pricing.plans.map((plan) => (
+          <li
+            class:list={[
+              'relative flex h-full flex-col rounded-3xl bg-white p-6 sm:p-8',
+              plan.featured ? 'border-2 border-[#10b981] shadow-xl lg:-mt-4 lg:pb-12' : 'border border-slate-200',
+            ]}
+          >
+            <article class="flex h-full flex-col" aria-labelledby={`plan-${plan.id}`}>
+              <p
+                class:list={[
+                  'text-sm font-bold tracking-wide uppercase',
+                  plan.featured ? 'text-emerald-700' : 'text-slate-500',
+                ]}
+              >
+                {plan.tier}
+              </p>
+              <h3 id={`plan-${plan.id}`} class="mt-1 text-2xl font-extrabold text-ink">
+                {plan.name}
+              </h3>
+              <p class="mt-2 text-slate-700">{plan.idealFor}</p>
+
+              <div class="mt-6 min-h-24">
+                <div class="price-monthly">
+                  <p class="flex items-baseline gap-1.5 text-ink">
+                    {plan.monthly.prefix && <span class="text-lg font-semibold">{plan.monthly.prefix}</span>}
+                    <span class="text-5xl font-extrabold tracking-tight tabular-nums">{formatPrice(plan.monthly.price!)}</span>
+                    <span class="text-lg font-semibold text-slate-600">/mes</span>
+                  </p>
+                  <p class="mt-1 text-sm text-slate-600">{plan.monthly.note}</p>
+                </div>
+                <div class="price-annual">
+                  {plan.annual.price !== null ? (
+                    <>
+                      <p class="flex items-baseline gap-1.5 text-ink">
+                        <span class="text-5xl font-extrabold tracking-tight tabular-nums">{formatPrice(plan.annual.price)}</span>
+                        <span class="text-lg font-semibold text-slate-600">/mes</span>
+                        <s class="ml-1 text-lg text-slate-500">
+                          <span class="sr-only">antes </span>{formatPrice(plan.monthly.price!)}
+                        </s>
+                      </p>
+                      <p class="mt-1 text-sm text-slate-600">{plan.annual.note}</p>
+                      <p class="mt-1 text-sm font-semibold text-emerald-800">Puesta en marcha gratis</p>
+                    </>
+                  ) : (
+                    <>
+                      <p class="text-3xl font-extrabold tracking-tight text-ink">Presupuesto personalizado</p>
+                      <p class="mt-1 text-sm text-slate-600">{plan.annual.note}</p>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <a
+                href="#contacto"
+                data-plan={plan.id}
+                class:list={[
+                  'mt-6 inline-flex min-h-14 items-center justify-center rounded-xl px-6 text-lg font-bold',
+                  plan.featured
+                    ? 'bg-emerald-700 text-white shadow-lg shadow-emerald-700/25 hover:bg-emerald-800'
+                    : 'border-2 border-ink text-ink hover:bg-ink hover:text-white',
+                ]}
+              >
+                {plan.cta}
+              </a>
+
+              <ul class="mt-8 space-y-4 border-t border-slate-200 pt-6">
+                {plan.features.map((feature) => (
+                  <li class="flex gap-3">
+                    <span class={plan.featured ? 'text-emerald-700' : 'text-slate-500'} set:html={check} />
+                    <p>
+                      <span class="block text-sm font-semibold text-slate-600">{feature.label}</span>
+                      <span class="text-slate-800">{feature.value}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-16">
+      <h3 class="text-xl font-bold text-ink">Servicios adicionales</h3>
+      <ul class="mt-6 grid gap-4 md:grid-cols-2">
+        {
+          pricing.addons.map((addon) => (
+            <li class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+              <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <p class="font-bold text-ink">{addon.name}</p>
+                <p class="font-bold text-brand-700">{addon.price}</p>
+              </div>
+              <p class="mt-2 text-slate-700">{addon.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Muestra el precio mensual o el anual según el radio marcado. Sin JS. */
+  .pricing:has(#billing-annual:checked) :global(.price-monthly),
+  .pricing:has(#billing-monthly:checked) :global(.price-annual) {
+    display: none;
+  }
+</style>
+
+<script>
+  import { pricing } from '../data/site';
+
+  // Los botones de cada plan rellenan el formulario de contacto con el plan elegido.
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>('[data-plan]');
+    if (!link) return;
+    const plan = pricing.plans.find((p) => p.id === link.dataset.plan);
+    if (!plan) return;
+    const annual = (document.getElementById('billing-annual') as HTMLInputElement | null)?.checked;
+    const billing =
+      plan.id === 'hotel'
+        ? 'presupuesto a medida'
+        : annual
+          ? `pago anual, ${plan.annual.price} €/mes + IVA`
+          : `pago mensual, ${plan.monthly.price} €/mes + IVA`;
+    event.preventDefault();
+    window.dispatchEvent(
+      new CustomEvent('airis:prefill-contact', {
+        detail: {
+          type: plan.id === 'hotel' ? 'hotel' : '',
+          comment: `Me interesa el ${plan.name} (${billing}). ${plan.id === 'hotel' ? 'Quiero solicitar una demo.' : `Quiero empezar la prueba gratis de ${pricing.trialDays} días.`}`,
+        },
+      }),
+    );
+  });
+</script>

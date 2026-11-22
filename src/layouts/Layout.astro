@@ -11,7 +11,7 @@ interface Props {
 }
 
 const {
-  title = `${site.name} | TPV para hostelería sin cuotas mensuales`,
+  title = `${site.name} | TPV para hostelería sin permanencia ni comisiones`,
   description = site.description,
   ogImage = '/og-image.png',
   includeFaqSchema = false,
@@ -21,7 +21,24 @@ const siteUrl = Astro.site ?? new URL(Astro.url.origin);
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 const ogImageUrl = new URL(ogImage, siteUrl).href;
 
-const prices = Object.values(pricing.base);
+// Una oferta por plan con su cuota mensual (sin IVA).
+const offers = pricing.plans.map((plan) => ({
+  '@type': 'Offer',
+  name: plan.name,
+  description: plan.idealFor,
+  price: plan.monthly.price,
+  priceCurrency: pricing.currency,
+  availability: 'https://schema.org/InStock',
+  areaServed: { '@type': 'Country', name: 'España' },
+  priceSpecification: {
+    '@type': 'UnitPriceSpecification',
+    price: plan.monthly.price,
+    ...(plan.monthly.prefix ? { minPrice: plan.monthly.price } : {}),
+    priceCurrency: pricing.currency,
+    unitText: 'MONTH',
+    valueAddedTaxIncluded: false,
+  },
+}));
 
 const softwareSchema = {
   '@context': 'https://schema.org',
@@ -43,15 +60,7 @@ const softwareSchema = {
     'Cierre de caja ciega',
     'Cumplimiento Veri*factu y TicketBai',
   ],
-  offers: {
-    '@type': 'AggregateOffer',
-    priceCurrency: pricing.currency,
-    lowPrice: Math.min(...prices),
-    highPrice: Math.max(...prices),
-    offerCount: prices.length,
-    availability: 'https://schema.org/InStock',
-    areaServed: { '@type': 'Country', name: 'España' },
-  },
+  offers,
   provider: {
     '@type': 'Organization',
     name: site.name,
