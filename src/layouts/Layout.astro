@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 import { site, pricing, faqs } from '../data/site';
 
 interface Props {
@@ -126,5 +127,7 @@ const toJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c'
       Saltar al contenido
     </a>
     <slot />
+    <!-- Vercel Web Analytics: sin cookies, se activa solo en el despliegue de Vercel. -->
+    <Analytics />
   </body>
 </html>
