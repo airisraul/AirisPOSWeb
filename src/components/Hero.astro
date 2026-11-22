@@ -1,68 +1,107 @@
 ---
-import Screenshot from './Screenshot.astro';
-import planoMesas from '../assets/capturas/plano-mesas.png';
-import { formatPrice, lowestMonthlyPrice, pricing } from '../data/site';
+import KdsMockup from './KdsMockup.astro';
+
+const stats = [
+  { value: '< 2 s', label: 'de la mesa a cocina' },
+  { value: '4', label: 'módulos conectados' },
+  { value: '3', label: 'Haciendas Forales' },
+];
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white" aria-labelledby="hero-title">
-  <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 pt-10 pb-16 sm:px-6 sm:pt-16 lg:grid-cols-2 lg:gap-16 lg:pt-20 lg:pb-24">
+<section class="theme-dark loops relative overflow-hidden bg-hero" aria-labelledby="hero-title">
+  <div class="bg-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-4 pt-12 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-24 lg:pb-28">
     <div>
-      <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-semibold text-emerald-800">
-        <span class="size-2 rounded-full bg-emerald-600" aria-hidden="true"></span>
-        Preparado para Veri*factu y TicketBai
+      <p class="inline-flex items-center gap-2 rounded-full border border-mint/30 bg-mint/10 px-3 py-1.5 text-sm font-semibold text-mint">
+        <span class="anim-pulse size-2 rounded-full bg-mint" aria-hidden="true"></span>
+        Validado Veri*Factu y TicketBAI
       </p>
 
-      <h1 id="hero-title" class="text-4xl leading-[1.1] font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-        El TPV que sigue cobrando <span class="text-brand-700">aunque se caiga internet</span>
+      <h1 id="hero-title" class="mt-6 font-display text-5xl leading-[1.02] font-extrabold tracking-tight sm:text-6xl xl:text-7xl">
+        Tu restaurante,<br />
+        <span class="text-gradient">en tiempo real.</span>
       </h1>
 
-      <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-700 sm:text-xl">
-        Para bares, cafeterías, restaurantes y locales de delivery que no pueden permitirse parar. Cobra en
-        barra en 2 toques, manda las comandas a cocina al momento y cierra caja en un minuto.
-        <strong class="text-ink">Desde {formatPrice(lowestMonthlyPrice)}/mes, sin permanencia ni comisiones sobre tus ventas.</strong>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
+        Sala, cocina, reservas y gestión en un único sistema. Las comandas vuelan de la tablet del camarero a la cocina y
+        vuelven avisando cuando el plato está listo.
       </p>
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a
-          href="#contacto"
-          class="inline-flex min-h-14 items-center justify-center rounded-xl bg-brand-700 px-6 text-lg font-bold text-white shadow-lg shadow-brand-700/25 hover:bg-brand-800"
-        >
-          Probar {pricing.trialDays} días gratis
+        <a href="#contacto" class="btn-mint inline-flex min-h-14 items-center justify-center gap-2 rounded-full px-7 text-lg font-bold">
+          Solicitar demo gratuita
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
         </a>
-        <a
-          href="#precios"
-          class="inline-flex min-h-14 items-center justify-center rounded-xl border-2 border-ink px-6 text-lg font-bold text-ink hover:bg-ink hover:text-white"
-        >
-          Ver planes y precios
+        <a href="#conectado" class="inline-flex min-h-14 items-center justify-center rounded-full border border-white/20 px-7 text-lg font-bold hover:bg-white/5">
+          Ver cómo funciona
         </a>
       </div>
 
-      <ul class="mt-8 grid gap-2 text-sm font-medium text-slate-700 sm:grid-cols-2">
+      <dl class="mt-10 grid max-w-md grid-cols-3 gap-4">
         {
-          [`${pricing.trialDays} días de prueba gratis`, 'Sin permanencia: te das de baja cuando quieras', 'Usa tus impresoras y cajón actuales', 'Puesta en marcha gratis con el plan anual'].map(
-            (item) => (
-              <li class="flex items-center gap-2">
-                <svg class="size-5 shrink-0 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <path d="m5 12 5 5L20 7" />
-                </svg>
-                {item}
-              </li>
-            ),
-          )
+          stats.map((stat) => (
+            <div class="flex flex-col-reverse">
+              <dt class="text-sm text-mist">{stat.label}</dt>
+              <dd class="font-display text-3xl font-bold">{stat.value}</dd>
+            </div>
+          ))
         }
-      </ul>
+      </dl>
     </div>
 
-    <figure class="relative">
-      <div class="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-br from-brand-100 via-white to-emerald-100 blur-2xl" aria-hidden="true"></div>
-      <Screenshot
-        src={planoMesas}
-        priority
-        sizes="(min-width: 80rem) 584px, (min-width: 64rem) calc(50vw - 56px), calc(100vw - 32px)"
-        alt="Plano de mesas de AirisPOS en una tablet: mesas libres en verde, ocupadas en rojo con su importe y tiempo, y reservadas en naranja, junto a la barra, la caja y la cocina."
-        class="drop-shadow-2xl"
-      />
-      <figcaption class="mt-3 text-center text-sm text-slate-600">Plano de mesas en tiempo real: ves qué está libre, ocupado o reservado.</figcaption>
-    </figure>
+    <div class="@container relative">
+      <div
+        class="story relative text-[clamp(6.5px,2.05cqi,13.5px)] pt-[4.5em] pb-[8em]"
+        role="img"
+        aria-label="Ilustración: la pantalla de cocina recibe la comanda de la mesa 25 y el móvil del camarero avisa de que los entrantes de la mesa 24 están listos para recoger."
+      >
+        <KdsMockup class="ml-[12%]" />
+
+        <!-- Móvil del camarero -->
+        <div class="anim-float absolute top-[13em] left-0 w-[30%]">
+          <div class="mock mk-phone">
+            <div class="mk-phone-screen">
+              <p class="mk-label">Mis mesas</p>
+              <div class="mt-[0.7em] overflow-hidden rounded-[0.9em]">
+                <div class="st-ready bg-mint px-[0.8em] py-[0.7em] text-mint-ink">
+                  <p class="text-[0.65em] font-extrabold tracking-wide uppercase">¡Listo para recoger!</p>
+                  <p class="font-display text-[1.15em] leading-tight font-bold">Mesa 24 · Entrantes</p>
+                </div>
+              </div>
+              <div class="mt-[0.7em] space-y-[0.6em] text-[0.85em]">
+                <div class="rounded-[0.8em] bg-black/5 p-[0.7em]">
+                  <p class="flex justify-between font-semibold"><span>Mesa 25</span><span class="text-paper-ink/70">En cocina</span></p>
+                  <div class="mk-progress mt-[0.5em]"><i class="st-prog-a" style="--p: 0.55"></i></div>
+                </div>
+                <div class="rounded-[0.8em] bg-black/5 p-[0.7em]">
+                  <p class="flex justify-between font-semibold"><span>Mesa 30</span><span class="text-paper-ink/70">Casi listo</span></p>
+                  <div class="mk-progress mt-[0.5em]"><i class="st-prog-b" style="--p: 0.85"></i></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Aviso de comanda enviada -->
+        <div class="anim-float-late absolute top-0 right-[2%]">
+          <div class="mock st-ping relative flex items-center gap-[0.5em] rounded-[1.2em] bg-paper px-[1em] py-[0.7em] font-semibold text-paper-ink shadow-device after:absolute after:inset-0 after:rounded-[inherit] after:ring-2 after:ring-mint after:opacity-0">
+            <svg class="size-[1.2em] text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14 0M8.5 16a6 6 0 0 1 7 0M12 20h.01" /></svg>
+            Mesa 25 → Cocina
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        data-motion-toggle
+        class="ml-auto flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-mist hover:bg-white/5 hover:text-white motion-reduce:hidden"
+      >
+        <svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path data-icon-pause d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" />
+          <path data-icon-play d="M8 5v14l11-7z" />
+        </svg>
+        <span data-motion-label>Pausar animaciones</span>
+      </button>
+    </div>
   </div>
 </section>

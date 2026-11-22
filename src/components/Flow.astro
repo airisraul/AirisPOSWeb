@@ -1,0 +1,66 @@
+---
+const steps = [
+  {
+    title: 'Camarero',
+    text: 'Toma la comanda en la tablet, junto a la mesa.',
+    icon: 'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM11 18h2',
+  },
+  {
+    title: 'Cocina KDS',
+    text: 'La recibe al instante, ordenada y con alérgenos.',
+    icon: 'M3 4h18v12H3zM8 20h8M12 16v4',
+  },
+  {
+    title: '¡Listo!',
+    text: 'Cocina marca el plato y la sala recibe el aviso.',
+    icon: 'M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0',
+  },
+  {
+    title: 'Dashboard',
+    text: 'Ventas, tiempos y stock actualizados al segundo.',
+    icon: 'M3 3v18h18M7 15l4-4 3 3 5-6',
+  },
+];
+---
+
+<section id="conectado" class="defer theme-dark loops flow py-20 sm:py-28" style="--cis: 745px; --cis-lg: 440px" aria-labelledby="conectado-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Todo conectado</p>
+      <h2 id="conectado-title" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">
+        Una comanda. Cero papeles. Cero carreras.
+      </h2>
+      <p class="mt-4 text-lg text-mist">Cada pantalla habla con las demás. Nadie pregunta «¿cómo va lo de la 12?».</p>
+    </div>
+
+    <div class="relative mt-14 lg:mt-20">
+      <!-- Línea con el punto que viaja: vertical en móvil, horizontal en escritorio -->
+      <div
+        class="absolute top-8 bottom-8 left-8 w-px bg-gradient-to-b from-mint/0 via-mint/40 to-mint/0 [container-type:size] lg:top-8 lg:right-[12.5%] lg:bottom-auto lg:left-[12.5%] lg:h-px lg:w-auto lg:bg-gradient-to-r"
+        aria-hidden="true"
+      >
+        <span class="flow-dot absolute -top-1.5 -left-1.5 size-3 rounded-full bg-mint opacity-0 shadow-glow"></span>
+      </div>
+
+      <ol class="relative grid gap-8 lg:grid-cols-4 lg:gap-6">
+        {
+          steps.map((step, i) => (
+            <li class="reveal flex gap-5 lg:flex-col lg:items-center lg:text-center" style={`--i: ${i}`}>
+              <span class="relative grid size-16 shrink-0 place-items-center rounded-2xl border border-night-line bg-night-card text-mint">
+                <span class="step-lit absolute -inset-px rounded-2xl opacity-0 ring-2 ring-mint shadow-glow" aria-hidden="true" />
+                <svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d={step.icon} />
+                </svg>
+              </span>
+              <div>
+                <p class="font-display text-sm font-bold text-mint">{String(i + 1).padStart(2, '0')}</p>
+                <h3 class="mt-1 font-display text-xl font-bold">{step.title}</h3>
+                <p class="mt-1 text-mist">{step.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>

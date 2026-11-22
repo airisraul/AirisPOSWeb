@@ -1,19 +1,26 @@
 ---
-import Logo from './Logo.astro';
-import { navLinks, site, whatsappUrl } from '../data/site';
+import { Image } from 'astro:assets';
+import logo from '../assets/marca/airispos-logo.jpg';
+import { navLinks, pricing, site, whatsappUrl } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="pb-float border-t border-slate-800 bg-slate-950 pt-12 text-slate-300">
+<footer class="theme-dark pb-float border-t border-night-line pt-14 text-mist">
   <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 md:grid-cols-3">
     <div>
-      <Logo inverted />
-      <p class="mt-4 max-w-xs">{site.tagline}. Para bares, cafeterías, restaurantes y delivery en toda España.</p>
+      <Image
+        src={logo}
+        alt={`${site.name} · ${site.company}`}
+        widths={[176, 352]}
+        sizes="176px"
+        class="h-auto w-44 rounded-2xl"
+      />
+      <p class="mt-4 max-w-xs">{site.tagline}. Sala, cocina, reservas y gestión en un único sistema.</p>
     </div>
 
     <nav aria-label="Secciones">
-      <p class="font-bold text-white">Secciones</p>
+      <p class="font-display font-bold text-white">Secciones</p>
       <ul class="mt-4 space-y-1">
         {
           navLinks.map((link) => (
@@ -28,7 +35,7 @@ const year = new Date().getFullYear();
     </nav>
 
     <div>
-      <p class="font-bold text-white">Contacto</p>
+      <p class="font-display font-bold text-white">Contacto</p>
       <ul class="mt-4 space-y-1">
         <li>
           <a href={whatsappUrl()} target="_blank" rel="noopener" class="inline-flex min-h-10 items-center hover:text-white hover:underline">
@@ -36,13 +43,16 @@ const year = new Date().getFullYear();
           </a>
         </li>
         <li>
-          <a href="#contacto" class="inline-flex min-h-10 items-center hover:text-white hover:underline">Probar 14 días gratis</a>
+          <a href="#contacto" class="inline-flex min-h-10 items-center hover:text-white hover:underline">Reservar una demo</a>
+        </li>
+        <li>
+          <a href="#precios" class="inline-flex min-h-10 items-center hover:text-white hover:underline">Probar {pricing.trialDays} días gratis</a>
         </li>
       </ul>
     </div>
   </div>
 
-  <div class="mx-auto mt-10 max-w-7xl border-t border-slate-800 px-4 pt-6 text-sm sm:px-6">
-    <p>© {year} {site.name}. Todos los derechos reservados.</p>
+  <div class="mx-auto mt-12 max-w-7xl border-t border-night-line px-4 pt-6 text-sm sm:px-6">
+    <p>© {year} {site.name} · {site.company}</p>
   </div>
 </footer>

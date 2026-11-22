@@ -1,15 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  /* Naranja de marca: el 700 sobre blanco supera 4.5:1 de contraste con texto blanco. */
-  --color-brand-50: #fff7ed;
-  --color-brand-100: #ffedd5;
-  --color-brand-500: #f97316;
-  --color-brand-600: #ea580c;
-  --color-brand-700: #c2410c;
-  --color-brand-800: #9a3412;
+  --font-sans: "Manrope Variable", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: "Sora Variable", "Manrope Variable", system-ui, sans-serif;
+  /* Verde de marca (logo). El 700 sobre blanco supera 4.5:1 de contraste con texto blanco. */
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
   --color-ink: #0f172a;
+  /* Tema oscuro de las secciones de producto */
+  --color-night: oklch(16% 0.018 175);
+  --color-night-card: oklch(20% 0.02 175);
+  --color-night-muted: oklch(24% 0.018 175);
+  --color-night-line: oklch(100% 0 0 / 0.09);
+  --color-mint: oklch(74% 0.15 165);
+  --color-mint-ink: oklch(16% 0.03 175);
+  --color-mist: oklch(72% 0.02 170);
+  --color-paper: oklch(99% 0.003 160);
+  --color-paper-ink: oklch(22% 0.02 200);
+  --color-amber: oklch(82% 0.15 80);
+  --color-device: oklch(10% 0.01 200);
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #075e54;
 }
@@ -30,7 +43,7 @@
   }
 
   body {
-    @apply bg-white text-ink antialiased;
+    @apply bg-night text-ink antialiased;
   }
 
   :focus-visible {
@@ -39,6 +52,7 @@
   }
 
   h1, h2, h3 {
+    font-family: var(--font-display);
     text-wrap: balance;
   }
 
@@ -149,4 +163,502 @@
 /* Espacio para que el botón flotante de WhatsApp no tape el final de la página */
 .pb-float {
   padding-block-end: calc(6rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* En @layer components para que las utilidades de Tailwind puedan sobrescribirlas. */
+@layer components {
+/* =====================================================================
+   Tema oscuro de producto (cabecera, hero, módulos, pantallas, contacto, pie)
+   ===================================================================== */
+.theme-dark {
+  color-scheme: dark;
+  background-color: var(--color-night);
+  color: oklch(97% 0.01 160);
+}
+
+.theme-dark :focus-visible {
+  outline-color: var(--color-mint);
+}
+
+.bg-hero {
+  background-image:
+    radial-gradient(60% 50% at 70% 20%, oklch(74% 0.15 165 / 0.28), transparent 70%),
+    radial-gradient(40% 40% at 10% 80%, oklch(82% 0.15 80 / 0.12), transparent 70%);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(oklch(100% 0 0 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(100% 0 0 / 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 60% at 50% 30%, #000, transparent);
+}
+
+.text-gradient {
+  background-image: linear-gradient(135deg, oklch(80% 0.15 165), oklch(66% 0.14 185));
+  background-clip: text;
+  color: transparent;
+}
+
+.btn-mint {
+  background-image: linear-gradient(135deg, oklch(80% 0.15 165), oklch(66% 0.14 185));
+  color: var(--color-mint-ink);
+  box-shadow: 0 20px 50px -20px oklch(74% 0.15 165 / 0.6);
+}
+
+.btn-mint:hover {
+  filter: brightness(1.08);
+}
+
+.shadow-device {
+  box-shadow: 0 40px 100px -30px oklch(0% 0 0 / 0.7);
+}
+
+.shadow-glow {
+  box-shadow: 0 30px 80px -20px oklch(74% 0.15 165 / 0.45);
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+}
+
+/* =====================================================================
+   Maquetas animadas del producto (todo en em: escalan con su contenedor)
+   ===================================================================== */
+.mock {
+  --red: oklch(58% 0.2 25);
+  --green: oklch(70% 0.16 160);
+  font-family: var(--font-sans);
+  line-height: 1.3;
+}
+
+.mk-device {
+  border-radius: 1.4em;
+  background: var(--color-device);
+  padding: 0.9em;
+  border: 1px solid oklch(100% 0 0 / 0.08);
+}
+
+.mk-paper {
+  border-radius: 0.9em;
+  background: var(--color-paper);
+  color: var(--color-paper-ink);
+}
+
+.mk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border-radius: 0.5em;
+  padding: 0.25em 0.6em;
+  font-size: 0.8em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mk-chip-amber { background: var(--color-amber); color: var(--color-mint-ink); }
+.mk-chip-ghost { border: 1px solid oklch(100% 0 0 / 0.25); color: #fff; }
+.mk-chip-red { background: var(--red); color: #fff; }
+.mk-chip-green { background: var(--green); color: var(--color-mint-ink); }
+
+/* --- KDS --- */
+.mk-kds-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+  padding: 0.2em 0.3em 0.8em;
+  color: #fff;
+  font-weight: 700;
+}
+
+.mk-tickets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7em;
+  align-items: start;
+}
+
+.mk-ticket {
+  position: relative;
+  overflow: hidden;
+  padding: 0.9em 0.8em 0.7em;
+  border-radius: 0.7em;
+  background: var(--color-paper);
+  color: var(--color-paper-ink);
+}
+
+.mk-ticket::before,
+.mk-ticket .mk-turn {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0.3em;
+  background: var(--red);
+}
+
+.mk-ticket.is-new::before,
+.mk-ticket .mk-turn {
+  background: var(--green);
+}
+
+.mk-ticket-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3em 0.4em;
+  margin-bottom: 0.6em;
+}
+
+.mk-ticket-head strong {
+  font-family: var(--font-display);
+  font-size: 1.25em;
+  white-space: nowrap;
+}
+
+.mk-timer {
+  margin-left: auto;
+  display: grid;
+}
+
+.mk-timer > * {
+  grid-area: 1 / 1;
+  justify-content: center;
+}
+
+.mk-items {
+  display: grid;
+  gap: 0.45em;
+  font-size: 0.85em;
+}
+
+.mk-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4em;
+}
+
+.mk-item > span {
+  position: relative;
+}
+
+.mk-item:is(.is-done, .st-done) > span {
+  color: oklch(50% 0.02 200);
+}
+
+.mk-item:is(.is-done, .st-done) > span::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+}
+
+.mk-check {
+  position: relative;
+  flex-shrink: 0;
+  inline-size: 1.15em;
+  block-size: 1.15em;
+  border-radius: 50%;
+  border: 1.5px solid oklch(70% 0.02 200);
+}
+
+.mk-item:is(.is-done, .st-done) .mk-check::after {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 50%;
+  background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12 4 4 8-8'/%3E%3C/svg%3E") center / 70% no-repeat;
+}
+
+/* --- Teléfono --- */
+.mk-phone {
+  border-radius: 2em;
+  background: var(--color-device);
+  padding: 0.55em;
+  box-shadow: 0 40px 100px -30px oklch(0% 0 0 / 0.7);
+}
+
+.mk-phone-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.55em;
+  background: var(--color-paper);
+  color: var(--color-paper-ink);
+  padding: 2.4em 0.9em 1em;
+}
+
+.mk-phone-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0.7em 32% auto;
+  height: 1.1em;
+  border-radius: 1em;
+  background: var(--color-device);
+}
+
+.mk-label {
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: oklch(50% 0.02 200);
+}
+
+.mk-progress {
+  height: 0.4em;
+  border-radius: 1em;
+  background: oklch(90% 0.01 180);
+  overflow: hidden;
+}
+
+.mk-progress > i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+  transform-origin: left;
+  scale: var(--p, 0.5) 1;
+}
+
+/* --- Plano de mesas --- */
+.mk-floor {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6em;
+}
+
+.mk-table {
+  position: relative;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  aspect-ratio: 1;
+  border-radius: 0.8em;
+  background: oklch(100% 0 0 / 0.06);
+  border: 1px solid oklch(100% 0 0 / 0.1);
+  font-weight: 700;
+}
+
+.mk-table.is-busy {
+  background: oklch(74% 0.15 165 / 0.85);
+  color: var(--color-mint-ink);
+  border-color: transparent;
+}
+
+.mk-table.is-booked,
+.mk-booked {
+  background: var(--color-amber);
+  color: var(--color-mint-ink);
+  border-color: transparent;
+}
+
+.mk-booked {
+  position: absolute;
+  inset: -1px;
+  display: grid;
+  place-content: center;
+  border-radius: inherit;
+}
+
+.mk-table small {
+  display: block;
+  font-size: 0.7em;
+  font-weight: 600;
+}
+
+.mk-bar {
+  transform-origin: bottom;
+}
+
+.mk-hbar {
+  transform-origin: left;
+}
+
+/* Estados finales cuando no hay animación (movimiento reducido o pausa) */
+.glow-on {
+  opacity: 0;
+}
+
+.split-left {
+  translate: -56% 0;
+}
+
+.split-right {
+  translate: 56% 0;
+}
+
+.table-move {
+  translate: calc(200% + 1.2em) calc(100% + 0.6em);
+}
+}
+
+/* =====================================================================
+   Animaciones: solo si el usuario no ha pedido reducir el movimiento.
+   Sin animación se ve siempre el estado final; nada queda oculto.
+   ===================================================================== */
+@keyframes pulse-dot { 50% { opacity: 0.4; scale: 0.7; } }
+@keyframes float { 50% { translate: 0 -10px; } }
+@keyframes marquee { to { translate: -50% 0; } }
+@keyframes reveal { from { opacity: 0; translate: 0 24px; } }
+@keyframes grow-y { from { scale: 1 0.1; } }
+@keyframes grow-x { from { scale: 0 1; } }
+
+/* Hero (8 s): entra la comanda T-25, cocina termina la T-24 y el camarero recibe el aviso. */
+/* El texto nunca se anima con opacidad: entra deslizando o con un barrido (clip-path), así
+   mantiene el contraste completo en todo momento. */
+@keyframes st-new { 0%, 4% { clip-path: inset(0 0 100% 0); translate: 0 -0.6em; } 12%, 94% { clip-path: inset(0); translate: 0 0; } 100% { clip-path: inset(0 0 100% 0); } }
+@keyframes st-done { 0%, 30% { opacity: 0; scale: 0.3; } 36%, 94% { opacity: 1; scale: 1; } 100% { opacity: 0; } }
+@keyframes st-badge-in { 0%, 30% { translate: 0 120%; } 36%, 94% { translate: 0 0; } 100% { translate: 0 120%; } }
+@keyframes st-badge-out { 0%, 30% { translate: 0 0; } 36%, 94% { translate: 0 -120%; } 100% { translate: 0 0; } }
+@keyframes st-strike { 0%, 32% { scale: 0 1; } 38%, 94% { scale: 1 1; } 100% { scale: 0 1; } }
+@keyframes st-ready { 0%, 40% { translate: 0 -110%; } 48%, 88% { translate: 0 0; } 96%, 100% { translate: 110% 0; } }
+@keyframes st-prog-a { 0%, 100% { scale: 0.3 1; } 60% { scale: 0.8 1; } }
+@keyframes st-prog-b { 0%, 100% { scale: 0.75 1; } 50% { scale: 0.97 1; } }
+@keyframes st-ping { 0% { opacity: 0.8; scale: 1; } 12%, 100% { opacity: 0; scale: 1.3; } }
+
+/* Ventas (6 s): toque en Txuleta, se añade la línea y se envía a cocina. */
+@keyframes tap-ring { 0%, 8% { opacity: 0; scale: 0.7; } 12% { opacity: 0.9; } 26%, 100% { opacity: 0; scale: 1.3; } }
+@keyframes line-add { 0%, 16% { clip-path: inset(0 100% 0 0); } 24%, 92% { clip-path: inset(0); } 100% { clip-path: inset(0 100% 0 0); } }
+@keyframes press { 0%, 62% { scale: 1; } 66% { scale: 0.94; } 72%, 100% { scale: 1; } }
+@keyframes glow-on { 0%, 64% { opacity: 0; } 70%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
+
+/* Reservas (7 s): se asigna la mesa 3 y aparece reservada en el plano. */
+@keyframes assign-press { 0%, 22% { scale: 1; } 26% { scale: 0.92; } 30%, 100% { scale: 1; } }
+@keyframes assign-done { 0%, 28% { clip-path: inset(0 100% 0 0); } 32%, 92% { clip-path: inset(0); } 100% { clip-path: inset(0 100% 0 0); } }
+@keyframes booked-in { 0%, 30% { scale: 0; } 38%, 92% { scale: 1; } 100% { scale: 0; } }
+
+/* Gestos: la cuenta 2 sale de detrás de la cuenta 1 */
+@keyframes split-left { 0%, 25% { translate: 0 0; } 45%, 85% { translate: -56% 0; } 100% { translate: 0 0; } }
+@keyframes split-right { 0%, 25% { translate: 0 0; } 45%, 85% { translate: 56% 0; } 100% { translate: 0 0; } }
+@keyframes table-move { 0%, 20% { translate: 0 0; } 45%, 80% { translate: calc(200% + 1.2em) calc(100% + 0.6em); } 100% { translate: 0 0; } }
+@keyframes table-lift { 0%, 20%, 45%, 100% { scale: 1; } 25%, 40% { scale: 1.08; } }
+
+/* Flujo de 4 pasos (6 s): el punto recorre la línea y cada paso se ilumina a su paso. */
+@keyframes travel-x { 0% { opacity: 0; translate: 0 0; } 6%, 94% { opacity: 1; } 100% { opacity: 0; translate: 100cqi 0; } }
+@keyframes travel-y { 0% { opacity: 0; translate: 0 0; } 6%, 94% { opacity: 1; } 100% { opacity: 0; translate: 0 100cqb; } }
+@keyframes step-lit { 0%, 30%, 100% { opacity: 0; } 6%, 22% { opacity: 1; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .anim-pulse { animation: pulse-dot 1.6s ease-in-out infinite; }
+  .anim-float { animation: float 6s ease-in-out infinite; }
+  .anim-float-late { animation: float 6s ease-in-out -3s infinite; }
+
+  .story .st-new { animation: st-new 8s ease-in-out infinite; }
+  .story .st-done .mk-check::after,
+  .story .mk-turn { animation: st-done 8s ease-in-out infinite; }
+  .story .st-ready-badge { animation: st-badge-in 8s ease-in-out infinite; }
+  .story .st-late-badge { animation: st-badge-out 8s ease-in-out infinite; }
+  .story .st-done > span::after { animation: st-strike 8s ease-in-out infinite; }
+  .story .st-ready { animation: st-ready 8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite; }
+  .story .st-prog-a { animation: st-prog-a 8s ease-in-out infinite; }
+  .story .st-prog-b { animation: st-prog-b 8s ease-in-out infinite; }
+  .story .st-ping::after { animation: st-ping 8s ease-out infinite; }
+
+  .sale .tap::after { animation: tap-ring 6s ease-out infinite; }
+  .sale .line-add { animation: line-add 6s ease-in-out infinite; }
+  .sale .press { animation: press 6s ease-in-out infinite; }
+  .sale .glow-on { animation: glow-on 6s ease-in-out infinite; }
+
+  .booking .assign { animation: assign-press 7s ease-in-out infinite; }
+  .booking .assign-done { animation: assign-done 7s ease-in-out infinite; }
+  .booking .mk-booked { animation: booked-in 7s cubic-bezier(0.2, 0.8, 0.2, 1) infinite; }
+
+  .split .split-left { animation: split-left 6s ease-in-out infinite; }
+  .split .split-right { animation: split-right 6s ease-in-out infinite; }
+  .move .table-move { animation: table-move 7s ease-in-out infinite, table-lift 7s ease-in-out infinite; }
+
+  .flow .flow-dot { animation: travel-y 6s linear infinite; }
+  .flow .step-lit { animation: step-lit 6s ease-in-out infinite; animation-delay: calc(var(--i) * 1.5s - 0.3s); }
+
+  @media (width >= 64rem) {
+    .flow .flow-dot { animation-name: travel-x; }
+  }
+
+  .marquee-track { animation: marquee 40s linear infinite; }
+
+  .marquee:is(:hover, :focus-within) .marquee-track {
+    animation-play-state: paused;
+  }
+
+  /* Aparición al hacer scroll y barras que crecen: mejora progresiva sin respaldo (es decorativo). */
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 80%;
+    }
+
+    .mk-bar {
+      animation: grow-y linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 45%;
+    }
+
+    .mk-hbar {
+      animation: grow-x linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+  }
+}
+
+/* Sin movimiento: la cinta de normativa se muestra como lista fija. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    inline-size: auto;
+  }
+
+  .marquee-track > [aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* Botón «Pausar animaciones» (WCAG 2.2.2) y ahorro de batería: bucles en pausa fuera de pantalla. */
+/* Estado final (sin animación): T-24 ya está lista. */
+.mk-timer {
+  overflow: hidden;
+  border-radius: 0.5em;
+}
+
+.st-late-badge {
+  translate: 0 -120%;
+}
+
+/* Secciones bajo el primer pantallazo: el navegador no las pinta hasta acercarse.
+   --cis es la altura estimada (móvil / escritorio); «auto» recuerda la real. */
+.defer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto var(--cis, 1000px);
+}
+
+@media (width >= 64rem) {
+  .defer {
+    contain-intrinsic-size: auto none auto var(--cis-lg, 800px);
+  }
+}
+
+[data-icon-play],
+:root[data-motion="paused"] [data-icon-pause] {
+  display: none;
+}
+
+:root[data-motion="paused"] [data-icon-play] {
+  display: inline;
+}
+
+/* Las animaciones ligadas al scroll (.reveal, barras) no se pausan: si no, podrían quedarse a medias. */
+:root[data-motion="paused"] .loops :not(.reveal, .mk-bar, .mk-hbar),
+:root[data-motion="paused"] .loops *::after,
+.loops.offscreen :not(.reveal, .mk-bar, .mk-hbar),
+.loops.offscreen *::after {
+  animation-play-state: paused !important;
 }

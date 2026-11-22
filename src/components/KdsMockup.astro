@@ -1,0 +1,59 @@
+---
+// Maqueta de la pantalla de cocina (KDS). Con la clase «story» en un ancestro se anima:
+// entra la comanda T-25 y la cocina termina la T-24.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['mock mk-device shadow-device', className]}>
+  <div class="mk-kds-head">
+    <span>KDS · Cocina</span>
+    <span class="flex gap-1.5">
+      <span class="mk-chip mk-chip-amber">En preparación</span>
+      <span class="mk-chip mk-chip-ghost">Listos</span>
+    </span>
+  </div>
+  <div class="mk-tickets">
+    <div class="mk-ticket">
+      <span class="mk-turn"></span>
+      <div class="mk-ticket-head">
+        <strong>T-24</strong>
+        <span class="mk-timer">
+          <span class="mk-chip mk-chip-red st-late-badge">12 min</span>
+          <span class="mk-chip mk-chip-green st-ready-badge">Listo</span>
+        </span>
+      </div>
+      <ul class="mk-items">
+        <li class="mk-item is-done"><span>1x Croquetas de chivo</span><i class="mk-check"></i></li>
+        <li class="mk-item is-done"><span>1x Ensaladilla rusa</span><i class="mk-check"></i></li>
+        <li class="mk-item st-done"><span>1x Entrecot</span><i class="mk-check"></i></li>
+      </ul>
+    </div>
+    <div class="mk-ticket is-new st-new">
+      <div class="mk-ticket-head">
+        <strong>T-25</strong>
+        <span class="mk-chip mk-chip-green">NUEVO</span>
+        <span class="mk-timer"><span class="mk-chip mk-chip-green">0 min</span></span>
+      </div>
+      <ul class="mk-items">
+        <li class="mk-item"><span>1x Tabla de quesos</span><i class="mk-check"></i></li>
+        <li class="mk-item"><span>1x Tartar de atún</span><i class="mk-check"></i></li>
+        <li class="mk-item"><span>1x Solomillo</span><i class="mk-check"></i></li>
+      </ul>
+    </div>
+    <div class="mk-ticket">
+      <div class="mk-ticket-head">
+        <strong>T-30</strong>
+        <span class="mk-timer"><span class="mk-chip mk-chip-red">18 min</span></span>
+      </div>
+      <ul class="mk-items">
+        <li class="mk-item is-done"><span>1x Pan sin gluten</span><i class="mk-check"></i></li>
+        <li class="mk-item"><span>1x Churrasco</span><i class="mk-check"></i></li>
+        <li class="mk-item"><span>1x Bizcocho</span><i class="mk-check"></i></li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,8 @@
 ---
+import '@fontsource-variable/sora/wght.css';
+import '@fontsource-variable/manrope/wght.css';
 import '../styles/global.css';
+import soraLatin from '@fontsource-variable/sora/files/sora-latin-wght-normal.woff2?url';
 import Analytics from '@vercel/analytics/astro';
 import { site, pricing, faqs } from '../data/site';
 
@@ -12,7 +15,7 @@ interface Props {
 }
 
 const {
-  title = `${site.name} | TPV para hostelería sin permanencia ni comisiones`,
+  title = `${site.name} — TPV, KDS y reservas para restaurantes`,
   description = site.description,
   ogImage = '/og-image.png',
   includeFaqSchema = false,
@@ -53,18 +56,20 @@ const softwareSchema = {
   operatingSystem: 'Android',
   inLanguage: 'es-ES',
   featureList: [
-    'Funcionamiento sin internet (offline-first)',
-    'Cobro en barra en 2 toques',
-    'Plano visual de mesas y terraza',
-    'Comandas a cocina y barra',
-    'División de cuentas',
-    'Cierre de caja ciega',
-    'Cumplimiento Veri*factu y TicketBai',
+    'Toma de comandas en tablet y TPV de barra',
+    'Pantalla de cocina (KDS) con semáforo de tiempos',
+    'Reservas online y plano de sala compartido',
+    'Escandallos, margen por plato y control de stock',
+    'Ventas por local, cadena y propietario',
+    'División de cuentas y cambio de mesa',
+    'Cierre de caja',
+    'Validado Veri*Factu y TicketBAI (Gipuzkoa, Araba y Bizkaia)',
   ],
   offers,
   provider: {
     '@type': 'Organization',
     name: site.name,
+    legalName: site.company,
     url: siteUrl.href,
   },
 };
@@ -93,10 +98,18 @@ const toJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c'
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#0b1f1b" />
     <meta name="format-detection" content="telephone=no" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href={soraLatin} as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      // Respeta la preferencia «animaciones en pausa» antes de pintar.
+      try {
+        if (localStorage.getItem('airis-motion') === 'paused') document.documentElement.dataset.motion = 'paused';
+      } catch {}
+    </script>
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph -->
@@ -127,6 +140,36 @@ const toJsonLd = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c'
       Saltar al contenido
     </a>
     <slot />
+    <script>
+      // Botón «Pausar animaciones» (WCAG 2.2.2): pausa todos los bucles y recuerda la elección.
+      const root = document.documentElement;
+      const sync = () => {
+        const paused = root.dataset.motion === 'paused';
+        document.querySelectorAll<HTMLButtonElement>('[data-motion-toggle]').forEach((button) => {
+          const label = button.querySelector('[data-motion-label]');
+          if (label) label.textContent = paused ? 'Reanudar animaciones' : 'Pausar animaciones';
+        });
+      };
+      document.querySelectorAll('[data-motion-toggle]').forEach((button) =>
+        button.addEventListener('click', () => {
+          const paused = root.dataset.motion !== 'paused';
+          if (paused) root.dataset.motion = 'paused';
+          else delete root.dataset.motion;
+          try {
+            localStorage.setItem('airis-motion', paused ? 'paused' : 'running');
+          } catch {}
+          sync();
+        }),
+      );
+      sync();
+
+      // Ahorro: los bucles de cada sección solo corren mientras se ven.
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => entry.target.classList.toggle('offscreen', !entry.isIntersecting)),
+        { rootMargin: '100px 0px' },
+      );
+      document.querySelectorAll('.loops').forEach((section) => observer.observe(section));
+    </script>
     <!-- Vercel Web Analytics: sin cookies, se activa solo en el despliegue de Vercel. -->
     <Analytics />
   </body>

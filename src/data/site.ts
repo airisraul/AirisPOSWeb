@@ -2,13 +2,14 @@
 // Todo lo marcado como PENDIENTE debe confirmarse antes de publicar la web.
 
 export const site = {
-  name: 'AirisPOS',
-  tagline: 'TPV para hostelería que sigue cobrando aunque se caiga internet',
+  name: 'AIRISPOS',
+  company: 'Hosteltech Soluciones Integrales',
+  tagline: 'TPV, KDS y reservas para restaurantes',
   description:
-    'AirisPOS es el TPV para bares, restaurantes y hoteles que funciona sin internet, cobra en 2 toques y cumple Veri*factu. Desde 39 €/mes, sin permanencia ni comisiones. Pruébalo 14 días gratis.',
+    'Comandas, cocina, reservas y dashboard conectados en tiempo real. Validado Veri*Factu y TicketBAI de Gipuzkoa, Araba y Bizkaia. Desde 39 €/mes, sin permanencia. Pruébalo 14 días gratis.',
   // Solo se usa dentro de los enlaces de WhatsApp; no se muestra escrito en la web.
   whatsappNumber: '34619738298',
-  whatsappDefaultMessage: 'Hola, me interesa AirisPOS para mi local. ¿Me podéis dar más información?',
+  whatsappDefaultMessage: 'Hola, me interesa AIRISPOS para mi local. ¿Me podéis dar más información?',
   // Si se rellena (p. ej. un endpoint de Formspree, Getform o una API propia), el formulario
   // envía los datos por POST a esta URL. Si se deja vacío, abre WhatsApp con los datos ya escritos.
   formEndpoint: '',
@@ -136,10 +137,11 @@ export const lowestMonthlyPrice = Math.min(
 );
 
 export const navLinks = [
-  { href: '#funcionalidades', label: 'Funcionalidades' },
-  { href: '#sectores', label: 'Sectores' },
+  { href: '#conectado', label: 'Cómo funciona' },
+  { href: '#modulos', label: 'Módulos' },
+  { href: '#pantallas', label: 'Pantallas' },
   { href: '#precios', label: 'Precios' },
-  { href: '#compatibilidad', label: 'Compatibilidad' },
+  { href: '#compatibilidad', label: 'Veri*Factu' },
   { href: '#faq', label: 'FAQ' },
 ];
 
@@ -148,7 +150,7 @@ export const faqs: { question: string; answer: string }[] = [
   {
     question: '¿Qué pasa si se va internet en pleno servicio?',
     answer:
-      'Nada grave: sigues cobrando, abriendo mesas y mandando comandas a cocina y barra como siempre, porque AirisPOS trabaja dentro del propio local. Cuando vuelve la conexión, se sincroniza todo solo, incluidos los registros fiscales.',
+      'Nada grave: sigues cobrando, abriendo mesas y mandando comandas a cocina y barra como siempre, porque AIRISPOS trabaja dentro del propio local. Cuando vuelve la conexión, se sincroniza todo solo, incluidos los registros fiscales.',
   },
   {
     question: '¿Hay permanencia o comisiones sobre mis ventas?',
@@ -156,7 +158,7 @@ export const faqs: { question: string; answer: string }[] = [
   },
   {
     question: '¿Cómo funciona la prueba gratis?',
-    answer: `Tienes ${pricing.trialDays} días para probar AirisPOS en tu local, sin compromiso. Si te convence, eliges el plan que mejor encaje; si no, no tienes que hacer nada más.`,
+    answer: `Tienes ${pricing.trialDays} días para probar AIRISPOS en tu local, sin compromiso. Si te convence, eliges el plan que mejor encaje; si no, no tienes que hacer nada más.`,
   },
   {
     question: '¿Puedo usar mi ordenador, terminal o impresora actual?',
@@ -171,7 +173,7 @@ export const faqs: { question: string; answer: string }[] = [
   {
     question: '¿Cumple con Veri*factu y TicketBai?',
     answer:
-      'Sí. AirisPOS genera los registros de facturación que exige la Ley Antifraude (Veri*factu) y, si tu local está en el País Vasco, emite los tickets según TicketBai. También puedes exportar los datos a tu contabilidad. Cuando cambia la normativa, lo actualizamos nosotros sin coste adicional.',
+      'Sí. AIRISPOS genera los registros de facturación que exige la Ley Antifraude (Veri*factu) y, si tu local está en el País Vasco, emite los tickets según TicketBai. También puedes exportar los datos a tu contabilidad. Cuando cambia la normativa, lo actualizamos nosotros sin coste adicional.',
   },
   {
     question: '¿Cuánto se tarda en tenerlo funcionando?',

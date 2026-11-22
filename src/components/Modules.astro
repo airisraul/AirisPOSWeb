@@ -1,0 +1,259 @@
+---
+import KdsMockup from './KdsMockup.astro';
+
+const modules = [
+  {
+    id: 'ventas',
+    eyebrow: 'Módulo de ventas',
+    title: 'Comandas en segundos, desde la mesa',
+    text: 'Carta visual y táctil en la tablet del camarero. Toca, añade modificadores y envía. La comanda llega a cocina antes de que el camarero vuelva a la barra.',
+    points: ['Modificadores y alérgenos', 'Pases por orden', 'Funciona en tablet y TPV de barra'],
+    label: 'Ilustración: el camarero toca «Txuleta» en la carta de la tablet, se añade a la cuenta de la mesa 12 y la envía a cocina.',
+  },
+  {
+    id: 'kds',
+    eyebrow: 'Pantalla KDS',
+    title: 'La cocina siempre sabe qué va primero',
+    text: 'Tickets ordenados por tiempo, con alertas de color cuando un pedido se retrasa y resumen global de lo que hay en marcha. Al marcar un plato, la sala lo sabe.',
+    points: ['Semáforo de tiempos', 'Resumen global de producción', 'Aviso automático a sala'],
+    label: 'Ilustración: pantalla de cocina con tres tickets ordenados por tiempo; los retrasados en rojo y los nuevos en verde.',
+  },
+  {
+    id: 'reservas',
+    eyebrow: 'Reservas online',
+    title: 'La reserva entra. La mesa se asigna. La sala lo ve.',
+    text: 'Las reservas web aparecen en el dashboard al momento. Asigna la mesa con un toque y los camareros la ven marcada en el plano de sala.',
+    points: ['Reserva online 24/7', 'Asignación instantánea', 'Plano de sala compartido'],
+    label: 'Ilustración: entra la reserva de Lucía para 4 personas a las 21:00, se le asigna la mesa 3 y aparece reservada en el plano de la terraza.',
+  },
+  {
+    id: 'escandallos',
+    eyebrow: 'Escandallos y stock',
+    title: 'Conoce el margen real de cada plato',
+    text: 'Define recetas con sus ingredientes y el sistema calcula el coste, el margen y descuenta stock con cada venta.',
+    points: ['Coste por ración', 'Margen al instante', 'Control de mermas'],
+    label: 'Ilustración: escandallo de una txuleta de 1 kg con un coste total de 14,05 € y un margen del 68 %.',
+  },
+  {
+    id: 'cadenas',
+    eyebrow: 'Cadenas y propiedad',
+    title: 'Todos tus locales, en tu bolsillo',
+    text: 'Consulta las ventas del día por local, por cadena o por propietario desde el móvil. Ideal para grupos y franquicias.',
+    points: ['Ventas por cadena y propiedad', 'Comparativas entre locales', 'Cierre de caja remoto'],
+    label: 'Ilustración: el móvil muestra 8.452 € vendidos hoy entre tres locales, un 12 % más que la semana pasada.',
+  },
+];
+
+const products = ['Croquetas', 'Txuleta', 'Rabas', 'Pintxo', 'Tarta queso', 'Txakoli'];
+const recipe = [
+  { name: 'Chuleta vaca madurada', cost: '12,40 €', share: 0.88 },
+  { name: 'Pimientos de Gernika', cost: '0,90 €', share: 0.064 },
+  { name: 'Patata y aceite', cost: '0,70 €', share: 0.05 },
+  { name: 'Sal en escamas', cost: '0,05 €', share: 0.02 },
+];
+const bars = [0.45, 0.62, 0.5, 0.78, 0.66, 0.92, 0.84];
+const venues = [
+  { name: 'Donostia Centro', total: '3.910 €' },
+  { name: 'Gasteiz', total: '2.640 €' },
+  { name: 'Bilbao Ría', total: '1.902 €' },
+];
+const tables = [
+  { n: 1 },
+  { n: 2, state: 'busy' },
+  { n: 3, assign: '21:00 · 4p' },
+  { n: 4 },
+  { n: 5, state: 'booked', note: '21:30 · 2p' },
+  { n: 6, state: 'busy' },
+  { n: 7 },
+  { n: 8, state: 'busy' },
+  { n: 9, state: 'booked', note: '22:00 · 8p' },
+];
+const check = 'm5 12 5 5L20 7';
+---
+
+<section id="modulos" class="defer theme-dark loops bg-night-card/40 py-20 sm:py-28" style="--cis: 3200px; --cis-lg: 2300px" aria-labelledby="modulos-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Un problema, una pantalla</p>
+      <h2 id="modulos-title" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">
+        Diseñado para el ritmo de un servicio real
+      </h2>
+    </div>
+
+    <div class="mt-16 space-y-20 sm:mt-20 lg:space-y-28">
+      {
+        modules.map((mod, i) => (
+          <article class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16" aria-labelledby={`mod-${mod.id}`}>
+            <div class:list={['reveal', i % 2 === 1 && 'lg:order-2']}>
+              <p class="eyebrow inline-flex items-center gap-2">
+                <span class="size-1.5 rounded-full bg-mint" aria-hidden="true" />
+                {mod.eyebrow}
+              </p>
+              <h3 id={`mod-${mod.id}`} class="mt-3 font-display text-2xl font-bold tracking-tight sm:text-4xl">
+                {mod.title}
+              </h3>
+              <p class="mt-4 text-lg leading-relaxed text-mist">{mod.text}</p>
+              <ul class="mt-6 space-y-3">
+                {mod.points.map((point) => (
+                  <li class="flex items-center gap-3 font-medium">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-full bg-mint/15 text-mint">
+                      <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d={check} />
+                      </svg>
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="@container reveal">
+              <div class="text-[clamp(7.5px,2.45cqi,15px)]" role="img" aria-label={mod.label}>
+                {mod.id === 'ventas' && (
+                  <div class="sale mock mk-device shadow-device grid grid-cols-[1.35fr_1fr] gap-[0.8em]">
+                    <div class="grid grid-cols-3 gap-[0.6em]">
+                      {products.map((name) => (
+                        <div
+                          class:list={[
+                            'relative flex aspect-square items-end rounded-[0.8em] p-[0.6em] text-[0.9em] font-semibold',
+                            name === 'Txuleta'
+                              ? 'tap bg-mint text-mint-ink after:absolute after:inset-0 after:rounded-[inherit] after:ring-4 after:ring-mint after:opacity-0'
+                              : 'bg-white/[0.07] text-white/85',
+                          ]}
+                        >
+                          {name}
+                        </div>
+                      ))}
+                    </div>
+                    <div class="mk-paper flex flex-col p-[0.9em]">
+                      <p class="font-display text-[1.1em] font-bold">Mesa 12</p>
+                      <ul class="mt-[0.6em] space-y-[0.45em] text-[0.9em]">
+                        <li class="flex justify-between"><span>2x Croquetas</span><span>9,00</span></li>
+                        <li class="line-add flex justify-between font-semibold text-brand-700"><span>1x Txuleta</span><span>48,00</span></li>
+                        <li class="flex justify-between"><span>1x Txakoli</span><span>18,00</span></li>
+                      </ul>
+                      <span class="press relative mt-auto block overflow-hidden rounded-[0.6em] bg-mint-ink px-[0.6em] py-[0.55em] text-center text-[0.85em] font-bold text-white">
+                        <span class="glow-on absolute inset-0 bg-brand-600" />
+                        <span class="relative">Enviar a cocina →</span>
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {mod.id === 'kds' && <KdsMockup class="story" />}
+
+                {mod.id === 'reservas' && (
+                  <div class="booking mock grid grid-cols-[1.15fr_1fr] gap-[0.8em]">
+                    <div class="mk-device shadow-device">
+                      <p class="font-display font-bold text-white">Reservas entrantes</p>
+                      <ul class="mt-[0.8em] space-y-[0.6em] text-[0.9em]">
+                        <li class="flex items-center gap-[0.6em] rounded-[0.8em] bg-mint/15 p-[0.6em] ring-1 ring-mint">
+                          <span class="flex-1">
+                            <strong class="block text-white">Lucía M.</strong>
+                            <span class="text-mist">21:00 · 4p</span>
+                          </span>
+                          <span class="assign grid">
+                            <span class="mk-chip mk-chip-green col-start-1 row-start-1">Asignar mesa 3</span>
+                            <span class="assign-done mk-chip col-start-1 row-start-1 justify-center bg-paper text-paper-ink">Mesa 3 ✓</span>
+                          </span>
+                        </li>
+                        <li class="flex items-center gap-[0.6em] rounded-[0.8em] bg-white/5 p-[0.6em]">
+                          <span class="flex-1">
+                            <strong class="block text-white">Iker A.</strong>
+                            <span class="text-mist">21:30 · 2p</span>
+                          </span>
+                          <span class="mk-chip mk-chip-ghost">Mesa 5</span>
+                        </li>
+                        <li class="flex items-center gap-[0.6em] rounded-[0.8em] bg-white/5 p-[0.6em]">
+                          <span class="flex-1">
+                            <strong class="block text-white">Grupo Ane</strong>
+                            <span class="text-mist">22:00 · 8p</span>
+                          </span>
+                          <span class="mk-chip mk-chip-ghost">Mesa 9</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="mk-device shadow-device">
+                      <div class="flex items-center justify-between gap-[0.4em] text-white">
+                        <p class="font-display font-bold">Plano · Terraza</p>
+                        <p class="flex gap-[0.6em] text-[0.7em] text-mist">
+                          <span class="flex items-center gap-[0.3em]"><i class="size-[0.7em] rounded-full bg-amber" />Reservada</span>
+                          <span class="flex items-center gap-[0.3em]"><i class="size-[0.7em] rounded-full bg-mint" />Ocupada</span>
+                        </p>
+                      </div>
+                      <div class="mk-floor mt-[0.8em] text-white">
+                        {tables.map((t) => (
+                          <span class:list={['mk-table', t.state === 'busy' && 'is-busy', t.state === 'booked' && 'is-booked']}>
+                            {t.n}
+                            {t.note && <small>{t.note}</small>}
+                            {t.assign && (
+                              <span class="mk-booked">
+                                {t.n}
+                                <small>{t.assign}</small>
+                              </span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {mod.id === 'escandallos' && (
+                  <div class="mock mk-device shadow-device text-white">
+                    <div class="flex items-center justify-between gap-[0.6em]">
+                      <p class="font-display text-[1.1em] font-bold">Escandallo · Txuleta 1kg</p>
+                      <span class="mk-chip mk-chip-green">Margen 68%</span>
+                    </div>
+                    <ul class="mt-[1em] space-y-[0.9em]">
+                      {recipe.map((row) => (
+                        <li>
+                          <p class="flex justify-between text-[0.9em]">
+                            <span>{row.name}</span>
+                            <span class="font-semibold">{row.cost}</span>
+                          </p>
+                          <div class="mt-[0.35em] h-[0.35em] rounded-full bg-white/10">
+                            <div class="mk-hbar h-full rounded-full bg-mint" style={`width: ${row.share * 100}%`} />
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                    <p class="mt-[1em] flex justify-between border-t border-white/10 pt-[0.8em] font-bold">
+                      <span>Coste total</span>
+                      <span class="text-mint">14,05 €</span>
+                    </p>
+                  </div>
+                )}
+
+                {mod.id === 'cadenas' && (
+                  <div class="mock mx-auto w-[58%] min-w-[17em]">
+                    <div class="mk-phone">
+                      <div class="mk-phone-screen">
+                        <p class="mk-label">Hoy · 3 locales</p>
+                        <p class="mt-[0.2em] font-display text-[2em] leading-none font-bold">8.452 €</p>
+                        <p class="mt-[0.3em] text-[0.8em] font-semibold text-brand-700">+12% vs. semana pasada</p>
+                        <div class="mt-[1em] flex h-[6em] items-end gap-[0.4em]">
+                          {bars.map((h) => (
+                            <div class="mk-bar flex-1 rounded-t-[0.35em] bg-brand-500" style={`height: ${h * 100}%`} />
+                          ))}
+                        </div>
+                        <ul class="mt-[1em] space-y-[0.5em] text-[0.85em]">
+                          {venues.map((v) => (
+                            <li class="flex justify-between rounded-[0.6em] bg-black/5 px-[0.7em] py-[0.5em]">
+                              <span>{v.name}</span>
+                              <strong>{v.total}</strong>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

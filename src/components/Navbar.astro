@@ -4,15 +4,15 @@ import WhatsAppIcon from './WhatsAppIcon.astro';
 import { navLinks, whatsappUrl } from '../data/site';
 ---
 
-<header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+<header class="theme-dark sticky top-0 z-40 border-b border-night-line bg-night">
   <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-2 px-4 sm:gap-3 sm:px-6 lg:h-18">
-    <a href="/" class="rounded-lg" aria-label="AirisPOS, ir al inicio">
+    <a href="/" class="rounded-lg" aria-label="AIRISPOS, ir al inicio">
       <Logo />
     </a>
 
     <nav class="site-nav order-last lg:order-none" aria-label="Principal">
       <button
-        class="menu-button inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-lg px-2 font-semibold text-ink hover:bg-slate-100 sm:px-3 lg:hidden"
+        class="menu-button inline-flex min-h-12 min-w-12 items-center justify-center gap-2 rounded-lg px-2 font-semibold text-white hover:bg-white/5 sm:px-3 lg:hidden"
         type="button"
         popovertarget="site-menu"
         aria-controls="site-menu"
@@ -26,26 +26,26 @@ import { navLinks, whatsappUrl } from '../data/site';
       <ul
         id="site-menu"
         popover="auto"
-        class="site-menu rounded-2xl border border-slate-200 bg-white p-2 shadow-xl"
+        class="site-menu rounded-2xl border border-night-line bg-night-card p-2 text-white shadow-xl"
       >
         {
           navLinks.map((link) => (
             <li>
               <a
                 href={link.href}
-                class="flex min-h-12 items-center rounded-lg px-4 font-semibold text-slate-700 hover:bg-slate-100 hover:text-ink lg:min-h-10 lg:px-3"
+                class="flex min-h-12 items-center rounded-lg px-4 font-semibold text-mist hover:bg-white/5 hover:text-white lg:min-h-10 lg:px-3"
               >
                 {link.label}
               </a>
             </li>
           ))
         }
-        <li class="mt-2 border-t border-slate-200 pt-2 lg:hidden">
+        <li class="mt-2 border-t border-night-line pt-2 lg:hidden">
           <a
             href={whatsappUrl()}
             target="_blank"
             rel="noopener"
-            class="flex min-h-12 items-center gap-2 rounded-lg px-4 font-semibold text-whatsapp-dark hover:bg-slate-100"
+            class="flex min-h-12 items-center gap-2 rounded-lg px-4 font-semibold text-whatsapp hover:bg-white/5"
           >
             <WhatsAppIcon />
             Escríbenos por WhatsApp
@@ -59,16 +59,17 @@ import { navLinks, whatsappUrl } from '../data/site';
         href={whatsappUrl()}
         target="_blank"
         rel="noopener"
-        class="hidden min-h-11 items-center gap-2 rounded-xl border-2 border-whatsapp-dark px-4 font-semibold text-whatsapp-dark hover:bg-whatsapp-dark hover:text-white lg:inline-flex"
+        class="hidden min-h-11 items-center gap-2 rounded-full border border-white/20 px-4 font-semibold text-white hover:bg-white/5 lg:inline-flex"
       >
         <WhatsAppIcon />
         WhatsApp
       </a>
       <a
         href="#contacto"
-        class="inline-flex min-h-11 items-center rounded-xl bg-brand-700 px-3 font-bold whitespace-nowrap text-white shadow-sm hover:bg-brand-800 sm:px-4"
+        class="btn-mint inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 font-bold whitespace-nowrap sm:px-5"
       >
-        Probar<span class="hidden min-[380px]:inline">&nbsp;gratis</span>
+        Pedir demo
+        <svg class="hidden size-4 min-[380px]:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
       </a>
     </div>
   </div>

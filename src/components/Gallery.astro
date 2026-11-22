@@ -1,0 +1,74 @@
+---
+import Screenshot from './Screenshot.astro';
+import pantallaCocina from '../assets/capturas/pantalla-cocina.png';
+import comandas from '../assets/capturas/comandas.png';
+import planoMesas from '../assets/capturas/plano-mesas.png';
+import panelControl from '../assets/capturas/panel-control.png';
+import cierreCaja from '../assets/capturas/cierre-caja.png';
+
+const big = '(min-width: 80rem) 592px, (min-width: 48rem) calc(50vw - 56px), calc(100vw - 64px)';
+const small = '(min-width: 80rem) 384px, (min-width: 48rem) calc(33vw - 48px), calc(100vw - 64px)';
+
+const shots = [
+  {
+    src: pantallaCocina,
+    caption: 'Pantalla KDS de cocina',
+    alt: 'Pantalla de cocina de AIRISPOS con los tickets de las mesas T-24, T-25, T-30 y T-31, sus tiempos en rojo o verde y el resumen global de platos.',
+    sizes: big,
+  },
+  {
+    src: comandas,
+    caption: 'Toma de comandas',
+    alt: 'Toma de comandas de la mesa T-30: carta por categorías con fotos y precios y, a la derecha, el detalle de la cuenta con el aviso de platos listos en cocina.',
+    sizes: big,
+  },
+  {
+    src: planoMesas,
+    caption: 'Plano de mesas',
+    alt: 'Plano de mesas en tiempo real: mesas libres en verde, ocupadas en rojo con su importe y tiempo, y reservadas en naranja, junto a la barra, la caja y la cocina.',
+    sizes: small,
+  },
+  {
+    src: panelControl,
+    caption: 'Dashboard de negocio',
+    alt: 'Dashboard de negocio con ingresos, ticket medio, mesas activas, ocupación, gráfico de ingresos y pedidos, y ventas por categoría.',
+    sizes: small,
+  },
+  {
+    src: cierreCaja,
+    caption: 'Cierre de caja',
+    alt: 'Cierre de turno con el total de ventas, el número de tickets, el desglose por formas de pago y el arqueo de caja.',
+    sizes: small,
+  },
+];
+---
+
+<section id="pantallas" class="defer theme-dark bg-night-card/40 py-20 sm:py-28" style="--cis: 1850px; --cis-lg: 770px" aria-labelledby="pantallas-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Producto real</p>
+      <h2 id="pantallas-title" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Míralo funcionando</h2>
+      <p class="mt-4 text-lg text-mist">Capturas reales de AIRISPOS en servicio.</p>
+    </div>
+
+    <ul class="mt-14 grid gap-6 md:grid-cols-6">
+      {
+        shots.map((shot, i) => (
+          <li class:list={['reveal', i < 2 ? 'md:col-span-3' : 'md:col-span-2']}>
+            <figure class="group flex h-full flex-col overflow-hidden rounded-3xl border border-night-line bg-night-card">
+              <div class="grid flex-1 place-items-center p-4 sm:p-5">
+                <Screenshot
+                  src={shot.src}
+                  alt={shot.alt}
+                  sizes={shot.sizes}
+                  class="rounded-xl transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+                />
+              </div>
+              <figcaption class="border-t border-night-line px-5 py-4 font-display font-semibold">{shot.caption}</figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

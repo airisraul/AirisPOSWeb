@@ -8,18 +8,18 @@ const inputClass =
   'block min-h-13 w-full rounded-xl border-2 border-slate-400 bg-white px-4 py-3 text-base text-ink placeholder:text-slate-500 focus:border-brand-700 focus:outline-none focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand-700';
 ---
 
-<section id="contacto" class="bg-ink py-16 text-white sm:py-24" aria-labelledby="contacto-title">
+<section id="contacto" class="defer theme-dark bg-hero py-20 sm:py-28" style="--cis: 1105px; --cis-lg: 670px" aria-labelledby="contacto-title">
   <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
     <div>
-      <p class="font-bold tracking-wide text-brand-500 uppercase">Prueba gratuita</p>
-      <h2 id="contacto-title" class="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Pruébalo {pricing.trialDays} días gratis en tu local
+      <p class="eyebrow">Demo y prueba gratis</p>
+      <h2 id="contacto-title" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">
+        ¿Listo para el próximo servicio?
       </h2>
-      <p class="mt-4 text-lg text-slate-300">
-        Déjanos tu teléfono y te llamamos para ponerlo en marcha con tu propia carta. Sin permanencia y sin compromiso. Tardas menos de un minuto en rellenarlo.
+      <p class="mt-4 text-lg text-mist">
+        Te enseñamos AIRISPOS funcionando con la carta de tu restaurante. Sin compromiso. Si te convence, lo pruebas {pricing.trialDays} días gratis en tu local.
       </p>
 
-      <ul class="mt-8 space-y-4 text-slate-200">
+      <ul class="mt-8 space-y-4 text-white/85">
         <li>Dinos en el comentario cuándo te viene mejor que te llamemos: sabemos que en pleno servicio no puedes atender el teléfono.</li>
         <li>
           ¿Prefieres hablar ya?
@@ -30,7 +30,7 @@ const inputClass =
       </ul>
     </div>
 
-    <div class="rounded-2xl bg-white p-6 text-ink shadow-xl sm:p-8">
+    <div class="rounded-3xl bg-white p-6 text-ink shadow-device [color-scheme:light] sm:p-8">
       <form
         id="lead-form"
         class="lead-form space-y-6"
@@ -114,10 +114,10 @@ const inputClass =
             type="submit"
             class="inline-flex min-h-14 w-full items-center justify-center rounded-xl bg-brand-700 px-6 text-lg font-bold text-white shadow-lg hover:bg-brand-800 disabled:cursor-wait disabled:opacity-70"
           >
-            Empezar mi prueba gratis
+            Reservar mi demo
           </button>
           <p class="mt-3 text-sm text-slate-600">
-            Solo usaremos tus datos para contactarte sobre AirisPOS. Sin spam y sin compromiso.
+            Solo usaremos tus datos para contactarte sobre AIRISPOS. Sin spam y sin compromiso.
           </p>
           <p id="lead-status" role="status" class="mt-4 empty:hidden rounded-xl bg-emerald-50 p-4 font-semibold text-emerald-900"></p>
         </div>
@@ -204,7 +204,7 @@ const inputClass =
           const typeLabel =
             contactBusinessTypes.find((t) => t.id === data.get('type'))?.label ?? 'Otro tipo de local';
           const lines = [
-            'Hola, quiero probar AirisPOS gratis.',
+            'Hola, quiero ver una demo de AIRISPOS.',
             `Nombre: ${data.get('name')}`,
             `Teléfono: ${data.get('phone')}`,
             `Tipo de local: ${typeLabel}`,

@@ -1,0 +1,77 @@
+---
+const slots = [1, 2, 3, 4, 5, 6];
+---
+
+<section class="defer theme-dark loops py-20 sm:py-28" style="--cis: 945px; --cis-lg: 610px" aria-labelledby="gestos-title">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow">Así de fácil</p>
+      <h2 id="gestos-title" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">
+        Lo que antes costaba minutos, ahora es un gesto
+      </h2>
+    </div>
+
+    <div class="mt-14 grid gap-6 lg:grid-cols-2">
+      <article class="reveal flex flex-col overflow-hidden rounded-3xl border border-night-line bg-night-card">
+        <div
+          class="split @container grid min-h-56 flex-1 place-items-center bg-white/[0.02] px-4 py-8 sm:min-h-64"
+          role="img"
+          aria-label="Ilustración: una cuenta de 75 € se divide en dos cuentas de 37,50 €."
+        >
+          <div class="mock relative w-[40%] max-w-56 text-[clamp(10px,3.2cqi,15px)]">
+            <div class="split-left mk-paper relative z-10 p-[0.9em] shadow-device">
+              <p class="mk-label">Cuenta 1</p>
+              <p class="font-display text-[1.6em] font-bold">37,50 €</p>
+              <p class="text-[0.8em] text-paper-ink/70">Croquetas · Rabas · Postre</p>
+            </div>
+            <div class="split-right mk-paper absolute inset-0 p-[0.9em] shadow-device">
+              <p class="mk-label">Cuenta 2</p>
+              <p class="font-display text-[1.6em] font-bold">37,50 €</p>
+              <p class="text-[0.8em] text-paper-ink/70">Txuleta · Txakoli</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 sm:p-8">
+          <h3 class="font-display text-xl font-bold">Dividir la cuenta</h3>
+          <p class="mt-2 text-mist">Un toque y cada comensal paga lo suyo, a partes iguales o por platos.</p>
+        </div>
+      </article>
+
+      <article class="reveal flex flex-col overflow-hidden rounded-3xl border border-night-line bg-night-card">
+        <div
+          class="move @container grid min-h-56 flex-1 place-items-center bg-white/[0.02] px-4 py-8 sm:min-h-64"
+          role="img"
+          aria-label="Ilustración: en el plano de la terraza, la mesa 1 se arrastra a un hueco libre y su comanda va con ella."
+        >
+          <div class="mock w-[70%] max-w-80 text-[clamp(10px,3cqi,15px)]">
+            <div class="flex items-center justify-between text-[0.85em] text-white">
+              <span class="font-display font-bold">Plano · Terraza</span>
+              <span class="flex gap-[0.8em] text-mist">
+                <span class="flex items-center gap-[0.3em]"><i class="size-[0.7em] rounded-full bg-amber"></i>Reservada</span>
+                <span class="flex items-center gap-[0.3em]"><i class="size-[0.7em] rounded-full bg-mint"></i>Ocupada</span>
+              </span>
+            </div>
+            <div class="relative mt-[0.7em] grid grid-cols-3 gap-[0.6em] text-white">
+              {
+                slots.map((n) =>
+                  n === 1 || n === 6 ? (
+                    <span class="mk-table border-dashed bg-transparent" />
+                  ) : (
+                    <span class:list={['mk-table', (n === 3 || n === 5) && 'is-busy', n === 4 && 'is-booked']}>{n}</span>
+                  ),
+                )
+              }
+              <span class="table-move mk-table is-booked absolute top-0 left-0 w-[calc((100%-1.2em)/3)] shadow-device">
+                1<small>37,50 €</small>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 sm:p-8">
+          <h3 class="font-display text-xl font-bold">Cambiar de mesa</h3>
+          <p class="mt-2 text-mist">Arrastra la mesa en el plano y la comanda viaja con ella.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
